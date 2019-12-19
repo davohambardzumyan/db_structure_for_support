@@ -1,0 +1,45 @@
+Table users:
+id | username | email | created_at | updated_at
+
+Table chat_rooms
+id | room_type | created_at | updated_at
+
+Table room_members
+id | room_id | user_ids (Json type, serialized form) | question | status | archived | created_at | updated_at 
+
+Table messages
+id | room_id | sender_id | message | created_at | updated_at
+
+Table receivers
+
+id | message_id | receiver_id | read_at
+
+
+Example room_members
+
+id | room_id | user_ids (Json type, serialized form) | question | status | archived 
+ 1 | 2       | {"from":4, "to": 9}           | "Question 1" | true | false
+
+In Laravel json type You can use:
+
+Model  RoomMeber:
+
+ protected $casts = [
+        'user_ids' => 'array'
+    ];
+    
+Actions
+Select:
+RoomMemer::where('user_ids->from',4)->first()
+
+Update:
+RoomMember::whereId(1)->update([
+  'user_ids->to'=> 1252
+]);
+
+
+
+
+ 
+    
+    
